@@ -9,13 +9,14 @@ ARG GIT_DIRTY=undefined
 ARG BUILD_CREATOR
 ARG BUILD_NUMBER
 ARG TIMEZONE=Europe/Zurich
-ARG SMTP_RELAYHOST=mail.coala.ch
+ARG SMTP_RELAYHOST
 ARG SMTP_MAILNAME=$HOSTNAME.localdomain
+ARG SMTP_MAILERTYPE='Internet Site'
 
 # Add labels
-LABEL branch=$GIT_BRANCH \
-    commit=$GIT_COMMIT \
-    dirty=$GIT_DIRTY \
+LABEL git-branch=$GIT_BRANCH \
+    git-commit=$GIT_COMMIT \
+    git-is-dirty=$GIT_DIRTY \
     build-creator=$BUILD_CREATOR \
     build-number=$BUILD_NUMBER
 
@@ -25,7 +26,7 @@ RUN sed -i "s/httpredir.debian.org/`curl -s -D - http://httpredir.debian.org/dem
 # Install & configure Postfix
 RUN DEBIAN_FRONTEND=noninteractive \
     echo "postfix postfix/mailname string '$SMTP_MAILNAME'" | debconf-set-selections && \
-    echo "postfix postfix/main_mailer_type string 'Satellite system'" | debconf-set-selections && \
+    echo "postfix postfix/main_mailer_type string '$SMTP_MAILERTYPE'" | debconf-set-selections && \
     echo "postfix postfix/relayhost string '$SMTP_RELAYHOST'" | debconf-set-selections
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update && \
@@ -52,7 +53,6 @@ RUN  DEBIAN_FRONTEND=noninteractive \
      mailutils \
      ssl-cert \
      openssl
-
 
 # Install base PHP stuff
 RUN DEBIAN_FRONTEND=noninteractive \
@@ -101,10 +101,10 @@ RUN apt-get clean \
     rm -rf /tmp/* /var/tmp/* /usr/share/doc/*
 
 # Remove lists to prevent installations
-#RUN rm -rf /var/lib/apt/lists/*
+# RUN rm -rf /var/lib/apt/lists/*
 
 # COPY default php.ini
-COPY ./image/php.ini /usr/local/etc/php/conf.d/php.ini
+COPY ./docker/build/image/php.ini /usr/local/etc/php/conf.d/php.ini
 # do we need to copy it to /etc/php5/cli/php.ini as well??
 
 # Set time zone

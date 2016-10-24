@@ -15,28 +15,25 @@ GIT_COMMIT_SHORT=$(echo $GIT_COMMIT | head -c 8)
 GIT_DIRTY='false'
 BUILD_CREATOR=$(git config user.email)
 
-if [ ! -z $PROJECTVERSION]; then
+if [ ! -z $PROJECTVERSION ]; then
   BUILD_NUMBER=$PROJECTVERSION
-  DOCKER_LATEST_TAG=latest
+  # As we build for 5.6 base, we set it explicitly
+  DOCKER_LATEST_TAG=5.6-latest
 else
   BUILD_NUMBER=${GIT_BRANCH}-$GIT_COMMIT_SHORT
   DOCKER_LATEST_TAG=${GIT_BRANCH}-latest
 fi
-
-exit
-# Override
-#BUILD_NUMBER=1.0.2
 
 # Whether the repo has uncommitted changes
 if [[ $(git status -s) ]]; then
     GIT_DIRTY='true'
 fi
 
-
 echo "===> Building docker image '$BUILD_NAME' with build '$BUILD_NUMBER' ..."
 
 # Add "-q" for silence...
 docker build \
+  --no-cache \
   -f ./docker/build/Dockerfile \
   -t $DOCKER_NAME/$BUILD_NAME:$DOCKER_LATEST_TAG \
   -t $DOCKER_NAME/$BUILD_NAME:$BUILD_NUMBER \
