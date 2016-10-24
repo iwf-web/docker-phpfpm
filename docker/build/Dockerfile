@@ -14,11 +14,11 @@ ARG SMTP_MAILNAME=$HOSTNAME.localdomain
 ARG SMTP_MAILERTYPE='Internet Site'
 
 # Add labels
-LABEL git-branch=$GIT_BRANCH \
-    git-commit=$GIT_COMMIT \
-    git-is-dirty=$GIT_DIRTY \
-    build-creator=$BUILD_CREATOR \
-    build-number=$BUILD_NUMBER
+LABEL io.web-solutions.git-branch=$GIT_BRANCH \
+    io.web-solutions.git-commit=$GIT_COMMIT \
+    io.web-solutions.git-is-dirty=$GIT_DIRTY \
+    io.web-solutions.build-creator=$BUILD_CREATOR \
+    io.web-solutions.build-number=$BUILD_NUMBER
 
 # Set different host due to ip-location redir errors...
 RUN sed -i "s/httpredir.debian.org/`curl -s -D - http://httpredir.debian.org/demo/debian/ | awk '/^Link:/ { print $2 }' | sed -e 's@<http://\(.*\)/debian/>;@\1@g'`/" /etc/apt/sources.list

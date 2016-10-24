@@ -7,8 +7,9 @@ Dockerfile
 .gitignore
 README.md
 env.*
+*.tmp
 
 # To prevent storing dev/temporary container data
 tmp
-data
-runtime
+docker/*
+!docker/build/*
