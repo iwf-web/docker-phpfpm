@@ -112,6 +112,9 @@ RUN rm /etc/localtime && \
     ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
     echo date.timezone = \"${TIMEZONE}\" >>/usr/local/etc/php/conf.d/php.ini
 
+# set TERM to xterm for bash on 2nd top line
+sed -i '2i\'"echo export TERM=xterm" /etc/bash.bashrc
+
 # install composer
 RUN  curl -sS https://getcomposer.org/installer | php && \
      mv composer.phar /usr/local/bin/composer
