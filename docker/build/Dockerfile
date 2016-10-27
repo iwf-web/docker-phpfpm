@@ -9,8 +9,7 @@ ARG GIT_DIRTY=undefined
 ARG BUILD_CREATOR
 ARG BUILD_NUMBER
 ARG TIMEZONE=Europe/Zurich
-ARG SMTP_RELAYHOST
-ARG SMTP_MAILNAME=$HOSTNAME.localdomain
+ARG SMTP_MAILERNAME=$HOST
 ARG SMTP_MAILERTYPE='Internet Site'
 
 # Add labels
@@ -25,13 +24,10 @@ RUN sed -i "s/httpredir.debian.org/`curl -s -D - http://httpredir.debian.org/dem
 
 # Install & configure Postfix
 RUN DEBIAN_FRONTEND=noninteractive \
-    echo "postfix postfix/mailname string '$SMTP_MAILNAME'" | debconf-set-selections && \
-    echo "postfix postfix/main_mailer_type string '$SMTP_MAILERTYPE'" | debconf-set-selections && \
-    echo "postfix postfix/relayhost string '$SMTP_RELAYHOST'" | debconf-set-selections
-RUN DEBIAN_FRONTEND=noninteractive \
+    echo "postfix postfix/mailname string $SMTP_MAILERNAME" | debconf-set-selections && \
+    echo "postfix postfix/main_mailer_type string $SMTP_MAILERTYPE" | debconf-set-selections && \
     apt-get update && \
-    apt-get install --no-install-recommends -y postfix
-RUN DEBIAN_FRONTEND=noninteractive \
+    apt-get install --no-install-recommends -y postfix && \
     dpkg-reconfigure debconf
 
 # Update System, install base stuff
@@ -52,7 +48,8 @@ RUN  DEBIAN_FRONTEND=noninteractive \
      postfix \
      mailutils \
      ssl-cert \
-     openssl
+     openssl \
+     nano
 
 # Install base PHP stuff
 RUN DEBIAN_FRONTEND=noninteractive \
