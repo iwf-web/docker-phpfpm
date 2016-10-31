@@ -34,7 +34,7 @@ echo "===> Building docker image '$BUILD_NAME' with build '$BUILD_NUMBER' ..."
 # Add "-q" for silence...
 docker build \
   --no-cache \
-  -f ./docker/build/Dockerfile \
+  -f Dockerfile \
   -t $DOCKER_NAME/$BUILD_NAME:$DOCKER_LATEST_TAG \
   -t $DOCKER_NAME/$BUILD_NAME:$BUILD_NUMBER \
   --build-arg GIT_BRANCH="$GIT_BRANCH" \
@@ -44,7 +44,11 @@ docker build \
   --build-arg BUILD_NUMBER="$BUILD_NUMBER" \
   .
 
-echo "Done"
-echo "Push to docker registry using:"
-echo "  docker push $DOCKER_NAME/$BUILD_NAME:$DOCKER_LATEST_TAG"
-echo "  docker push $DOCKER_NAME/$BUILD_NAME:$BUILD_NUMBER"
+if [ $? -eq 0 ]; then
+  echo -e "\nBuild successfully created.\n\n"
+  echo "Push to docker registry using:"
+  echo "  docker push $DOCKER_NAME/$BUILD_NAME:$DOCKER_LATEST_TAG"
+  echo "  docker push $DOCKER_NAME/$BUILD_NAME:$BUILD_NUMBER"
+else
+  echo -e "\nBuild failed."
+fi

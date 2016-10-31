@@ -9,8 +9,10 @@ ARG GIT_DIRTY=undefined
 ARG BUILD_CREATOR
 ARG BUILD_NUMBER
 ARG TIMEZONE=Europe/Zurich
-ARG SMTP_MAILERNAME=$HOST
+ARG SMTP_MAILERNAME=$HOSTNAME.web-solutions.io
 ARG SMTP_MAILERTYPE='Internet Site'
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Add labels
 LABEL io.web-solutions.git-branch=$GIT_BRANCH \
@@ -23,16 +25,21 @@ LABEL io.web-solutions.git-branch=$GIT_BRANCH \
 RUN sed -i "s/httpredir.debian.org/`curl -s -D - http://httpredir.debian.org/demo/debian/ | awk '/^Link:/ { print $2 }' | sed -e 's@<http://\(.*\)/debian/>;@\1@g'`/" /etc/apt/sources.list
 
 # Install & configure Postfix
-RUN DEBIAN_FRONTEND=noninteractive \
-    echo "postfix postfix/mailname string $SMTP_MAILERNAME" | debconf-set-selections && \
+RUN echo "postfix postfix/mailname string $SMTP_MAILERNAME" | debconf-set-selections && \
     echo "postfix postfix/main_mailer_type string $SMTP_MAILERTYPE" | debconf-set-selections && \
     apt-get update && \
-    apt-get install --no-install-recommends -y postfix && \
-    dpkg-reconfigure debconf
+    apt-get install --no-install-recommends -y \
+            postfix \
+            mailutils
+
+# set postfix stuff
+COPY ./assets/iwfpostfix.sh /usr/local/bin/iwfpostfix.sh
+RUN chmod +x /usr/local/bin/iwfpostfix.sh && \
+    postconf -e myhostname=SMTP_MAILERNAME && \
+    postconf -F '*/*/chroot = n'
 
 # Update System, install base stuff
-RUN  DEBIAN_FRONTEND=noninteractive \
-     apt-get update && \
+RUN  apt-get update && \
      apt-get install --no-install-recommends -y \
      binutils \
      curl \
@@ -45,15 +52,14 @@ RUN  DEBIAN_FRONTEND=noninteractive \
      ruby-dev \
      openssh-client \
      sudo \
-     postfix \
-     mailutils \
+     dnsutils \
      ssl-cert \
      openssl \
-     nano
+     nano \
+     supervisor
 
 # Install base PHP stuff
-RUN DEBIAN_FRONTEND=noninteractive \
-    apt-get update && apt-get install -y \
+RUN apt-get update && apt-get --no-install-recommends install -y \
     php5-mysql \
     php5-curl \
     php5-common \
@@ -101,8 +107,9 @@ RUN apt-get clean \
 # RUN rm -rf /var/lib/apt/lists/*
 
 # COPY default php.ini
-COPY ./docker/build/image/php.ini /usr/local/etc/php/conf.d/php.ini
+COPY ./assets/php.ini /usr/local/etc/php/conf.d/php.ini
 # do we need to copy it to /etc/php5/cli/php.ini as well??
+COPY ./assets/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Set time zone
 RUN rm /etc/localtime && \
@@ -132,5 +139,5 @@ WORKDIR /root
 # Exposed port(s)
 EXPOSE 9000
 
-# Start php-fpm
-CMD ["php-fpm"]
+# Start supervisor (see http://supervisord.org)
+CMD ["/usr/bin/supervisord"]
