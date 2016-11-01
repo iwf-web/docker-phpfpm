@@ -109,7 +109,7 @@ RUN apt-get clean \
 # COPY default php.ini
 COPY ./assets/php.ini /usr/local/etc/php/conf.d/php.ini
 # do we need to copy it to /etc/php5/cli/php.ini as well??
-COPY ./assets/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./assets/iwfsupervisor.conf /etc/supervisor/conf.d/iwfsupervisor.conf
 
 # Set time zone
 RUN rm /etc/localtime && \
