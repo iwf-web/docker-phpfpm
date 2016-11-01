@@ -140,4 +140,4 @@ WORKDIR /root
 EXPOSE 9000
 
 # Start supervisor (see http://supervisord.org)
-CMD ["/usr/bin/supervisord“, "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["/usr/bin/supervisord“, "-c", "/etc/supervisor/conf.d/iwfsupervisor.conf"]
