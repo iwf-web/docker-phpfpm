@@ -60,6 +60,9 @@ RUN  apt-get update && \
 
 # Install base PHP stuff
 RUN apt-get update && apt-get --no-install-recommends install -y \
+    zlib1g-dev \
+    libicu-dev \
+    g++ \
     php5-mysql \
     php5-curl \
     php5-common \
@@ -76,13 +79,15 @@ RUN apt-get update && apt-get --no-install-recommends install -y \
     libfreetype6-dev \
     libxml2-dev \
     libmagickwand-dev \
+    libjpeg-dev \
     libjpeg62-turbo-dev \
     libpng-dev && \
-    \
+
     docker-php-ext-install pdo pdo_mysql && \
     docker-php-ext-install soap && \
-    docker-php-ext-configure gd --with-jpeg-dir=/usr/include/ && \
+    docker-php-ext-configure gd --with-jpeg-dir --with-png-dir --with-freetype-dir && \
     docker-php-ext-install gd && \
+    docker-php-ext-install intl && \
     docker-php-ext-install iconv mcrypt && \
     docker-php-ext-install exif && \
     docker-php-ext-install zip && \
