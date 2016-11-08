@@ -66,11 +66,13 @@ if [[ -n ${DEF_BRANCH} ]]; then
 
   if [ ! -z $PROJECTVERSION ]; then
     BUILD_NUMBER=$PROJECTVERSION
-    DOCKER_LATEST_TAG=latest
+    # As we build for 5.6 base, we set it explicitly
+    DOCKER_LATEST_TAG=5.6-latest
   else
     BUILD_NUMBER=${GIT_BRANCH}-$GIT_COMMIT_SHORT
     DOCKER_LATEST_TAG=${GIT_BRANCH}-latest
   fi
+
 
   # Whether the repo has uncommitted changes
   if [[ $(git status -s) ]]; then
