@@ -34,6 +34,7 @@ echo "===> Building docker image '$BUILD_NAME' with build '$BUILD_NUMBER' ..."
 # Add "-q" for silence...
 docker build \
   --no-cache \
+  --pull
   -f Dockerfile \
   -t $DOCKER_NAME/$BUILD_NAME:$DOCKER_LATEST_TAG \
   -t $DOCKER_NAME/$BUILD_NAME:$BUILD_NUMBER \
