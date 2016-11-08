@@ -35,7 +35,7 @@ RUN echo "postfix postfix/mailname string $SMTP_MAILERNAME" | debconf-set-select
 # set postfix stuff
 COPY ./assets/iwfpostfix.sh /usr/local/bin/iwfpostfix.sh
 RUN chmod +x /usr/local/bin/iwfpostfix.sh && \
-    postconf -e myhostname=SMTP_MAILERNAME && \
+    postconf -e myhostname=$SMTP_MAILERNAME && \
     postconf -F '*/*/chroot = n'
 
 # Update System, install base stuff
@@ -145,4 +145,5 @@ WORKDIR /root
 EXPOSE 9000
 
 # Start supervisor (see http://supervisord.org)
+ENTRYPOINT ["/usr/local/bin/iwfstartup.sh"]
 CMD ["/usr/bin/supervisord -c /etc/supervisor/conf.d/iwfsupervisor.conf"]
