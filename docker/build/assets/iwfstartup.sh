@@ -15,4 +15,4 @@ do
 done
 
 echo "$(date): Starting $@ ..."
-exec "$@"
+exec $@
