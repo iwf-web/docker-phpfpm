@@ -10,6 +10,7 @@ ARG BUILD_CREATOR
 ARG BUILD_NUMBER
 ARG TIMEZONE=Europe/Zurich
 ARG SMTP_MAILERNAME=docker.iwf.io
+# Default is direct delivery for mails
 ARG SMTP_MAILERTYPE='Internet Site'
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -30,6 +31,7 @@ RUN echo "postfix postfix/mailname string $SMTP_MAILERNAME" | debconf-set-select
     apt-get update && \
     apt-get install --no-install-recommends -y \
             postfix \
+            libsasl2-modules \
             mailutils
 
 # set postfix stuff
