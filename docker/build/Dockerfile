@@ -1,4 +1,4 @@
-FROM php:5.6-fpm
+FROM php:7.0-fpm
 
 MAINTAINER Michel Clément <m.clement@iwf.ch>
 
@@ -9,9 +9,6 @@ ARG GIT_DIRTY=undefined
 ARG BUILD_CREATOR
 ARG BUILD_NUMBER
 ARG TIMEZONE=Europe/Zurich
-ARG SMTP_MAILERNAME=docker.iwf.io
-# Default is direct delivery for mails
-ARG SMTP_MAILERTYPE='Internet Site'
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -24,21 +21,6 @@ LABEL io.web-solutions.git-branch=$GIT_BRANCH \
 
 # Set different host due to ip-location redir errors...
 RUN sed -i "s/httpredir.debian.org/`curl -s -D - http://httpredir.debian.org/demo/debian/ | awk '/^Link:/ { print $2 }' | sed -e 's@<http://\(.*\)/debian/>;@\1@g'`/" /etc/apt/sources.list
-
-# Install & configure Postfix
-RUN echo "postfix postfix/mailname string $SMTP_MAILERNAME" | debconf-set-selections && \
-    echo "postfix postfix/main_mailer_type string $SMTP_MAILERTYPE" | debconf-set-selections && \
-    apt-get update && \
-    apt-get install --no-install-recommends -y \
-            postfix \
-            libsasl2-modules \
-            mailutils
-
-# set postfix stuff
-COPY ./assets/iwfpostfix.sh /usr/local/bin/iwfpostfix.sh
-RUN chmod +x /usr/local/bin/iwfpostfix.sh && \
-    postconf -e myhostname=$SMTP_MAILERNAME && \
-    postconf -F '*/*/chroot = n'
 
 # Update System, install base stuff
 RUN  apt-get update && \
