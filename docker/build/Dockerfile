@@ -130,4 +130,4 @@ EXPOSE 9000
 
 # Start supervisor (see http://supervisord.org)
 ENTRYPOINT ["/usr/local/bin/iwfstartup.sh"]
-CMD ["/usr/bin/supervisord -c /etc/supervisor/conf.d/iwfsupervisor.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/iwfsupervisor.conf"]
