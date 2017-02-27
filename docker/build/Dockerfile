@@ -120,10 +120,13 @@ RUN mkdir -p /app
 #    chown -R www-data:www-data /web
 
 # Set environment variables.
-ENV HOME /root
+ENV HOME /var/www
 
 # Define working directory.
-WORKDIR /root
+WORKDIR /var/www
+RUN     chown -R www-data:www-data /var/www
+
+USER www-data
 
 # Exposed port(s)
 EXPOSE 9000
