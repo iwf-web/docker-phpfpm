@@ -1,4 +1,4 @@
-FROM php:7.0-fpm
+FROM php:7.1-fpm
 
 MAINTAINER Michel Clément <m.clement@iwf.ch>
 
@@ -47,19 +47,15 @@ RUN apt-get update && apt-get --no-install-recommends install -y \
     zlib1g-dev \
     libicu-dev \
     g++ \
-    php5-mysql \
-    php5-curl \
-    php5-common \
-    php5-gd \
-    php5-imagick \
-    php5-intl \
-    php5-dev \
-    php5-sqlite \
-    #php5-xdebug \
-    #php5-memcached \
-    \
-    #libmemcached-dev \
-    libmcrypt-dev \
+#    php5-mysql \
+#    php5-curl \
+#    php5-common \
+#    php5-gd \
+#    php5-imagick \
+#    php5-intl \
+#    php5-dev \
+    libcurl4-gnutls-dev \
+    libsqlite3-dev \
     libfreetype6-dev \
     libxml2-dev \
     libmagickwand-dev \
@@ -67,25 +63,21 @@ RUN apt-get update && apt-get --no-install-recommends install -y \
     libjpeg62-turbo-dev \
     libpng-dev && \
 
-    docker-php-ext-install pdo pdo_mysql && \
+    docker-php-ext-install curl && \
+    docker-php-ext-install pdo pdo_mysql pdo_sqlite && \
     docker-php-ext-install soap && \
     docker-php-ext-configure gd --with-jpeg-dir --with-png-dir --with-freetype-dir && \
     docker-php-ext-install gd && \
     docker-php-ext-install intl && \
-    docker-php-ext-install iconv mcrypt && \
+    docker-php-ext-install iconv && \
     docker-php-ext-install exif && \
     docker-php-ext-install zip && \
     \
     pecl install imagick && \
     docker-php-ext-enable imagick && \
-    #pecl install memcached  && \
-    #docker-php-ext-enable memcached && \
     \
-    pecl install zendopcache-7.0.4 && \
+    docker-php-ext-install opcache && \
     docker-php-ext-enable opcache
-    \
-    #pecl install xdebug && \
-    #docker-php-ext-enable xdebug
 
 # Clean up
 RUN apt-get clean \
@@ -114,10 +106,6 @@ RUN  curl -sS https://getcomposer.org/installer | php && \
 
 # Build base structure
 RUN mkdir -p /app
-
-# Set ownerships
-#RUN chown -R www-data:www-data /app && \
-#    chown -R www-data:www-data /web
 
 # Set environment variables.
 ENV HOME /var/www
