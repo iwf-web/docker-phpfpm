@@ -40,7 +40,8 @@ RUN  apt-get update && \
      ssl-cert \
      openssl \
      nano \
-     supervisor
+     supervisor \
+     netcat
 
 # Install base PHP stuff
 RUN apt-get update && apt-get --no-install-recommends install -y \
@@ -96,9 +97,9 @@ RUN apt-get clean \
 # RUN rm -rf /var/lib/apt/lists/*
 
 # COPY default php.ini
-COPY ./assets/php.ini /usr/local/etc/php/conf.d/php.ini
-# do we need to copy it to /etc/php5/cli/php.ini as well??
-COPY ./assets/iwfsupervisor.conf /etc/supervisor/conf.d/iwfsupervisor.conf
+COPY ./assets/ /
+RUN chmod +x /usr/local/bin/wait-for.sh && \
+    chmod +x /usr/local/bin/iwfstartup.sh
 
 # Set time zone
 RUN rm /etc/localtime && \
@@ -114,10 +115,6 @@ RUN  curl -sS https://getcomposer.org/installer | php && \
 
 # Build base structure
 RUN mkdir -p /app
-
-# Set ownerships
-#RUN chown -R www-data:www-data /app && \
-#    chown -R www-data:www-data /web
 
 # Set environment variables.
 ENV HOME /var/www
