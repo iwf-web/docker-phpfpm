@@ -1,7 +1,7 @@
 #!/bin/bash
 #set -x
 
-DATA_PATH=/data/dockerinit.d/php-fpm
+DATA_PATH=/data/dockerinit.d
 
 echo -e "\n------------------------------------------------------------"
 echo "$(date): Starting up ..."
