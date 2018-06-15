@@ -1,4 +1,4 @@
-FROM php:7.1-fpm
+FROM php:7.1-fpm-jessie
 
 MAINTAINER Michel Clément <m.clement@iwf.ch>
 
@@ -41,7 +41,10 @@ RUN  apt-get update && \
      openssl \
      nano \
      supervisor \
-     netcat
+     netcat \
+     wget \
+     gnupg \
+     cron
 
 # Install base PHP stuff
 RUN apt-get update && apt-get --no-install-recommends install -y \
