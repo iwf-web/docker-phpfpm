@@ -12,6 +12,9 @@ ARG TIMEZONE=Europe/Zurich
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# this variable needs to be defined for each environment
+ENV RUNTIME_ENVIRONMENT=dev
+
 # Add labels
 LABEL io.web-solutions.git-branch=$GIT_BRANCH \
     io.web-solutions.git-commit=$GIT_COMMIT \
@@ -103,6 +106,9 @@ RUN rm /etc/localtime && \
 
 # set TERM to xterm for bash on 2nd top line
 RUN sed -i '2i\'"export TERM=xterm" /etc/bash.bashrc
+
+# add www-data to the sudoers to allow changing to root anytime
+RUN echo "www-data ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # install composer
 RUN  curl -sS https://getcomposer.org/installer | php && \
