@@ -123,9 +123,10 @@ ENV HOME /var/www
 
 # Define working directory.
 WORKDIR /var/www
-RUN     chown -R www-data:www-data /var/www
+RUN     chown -R www-data:www-data /var/www /var/log/supervisor
 
-USER www-data
+# use root to start supervisor
+USER root
 
 # Exposed port(s)
 EXPOSE 9000
@@ -133,3 +134,6 @@ EXPOSE 9000
 # Start supervisor (see http://supervisord.org)
 ENTRYPOINT ["/usr/local/bin/iwfstartup.sh"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/iwfsupervisor.conf"]
+
+# use www-data as default user
+USER www-data
