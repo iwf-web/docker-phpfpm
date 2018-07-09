@@ -123,7 +123,7 @@ ENV HOME /var/www
 
 # Define working directory.
 WORKDIR /var/www
-RUN     chown -R www-data:www-data /var/www /var/log/supervisor
+RUN     chown -R www-data:www-data /var/www
 
 # use www-data to start supervisor
 USER www-data
