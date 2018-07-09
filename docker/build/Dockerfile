@@ -94,10 +94,11 @@ RUN apt-get clean \
 # Remove lists to prevent installations
 # RUN rm -rf /var/lib/apt/lists/*
 
-# COPY default php.ini
+# copy assets
 COPY ./assets/ /
 RUN chmod +x /usr/local/bin/wait-for.sh && \
-    chmod +x /usr/local/bin/iwfstartup.sh
+    chmod +x /usr/local/bin/iwfstartup.sh && \
+    chmod +x /usr/local/bin/iwfsconsole.sh
 
 # Set time zone
 RUN rm /etc/localtime && \
