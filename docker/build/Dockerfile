@@ -98,7 +98,7 @@ RUN apt-get clean \
 COPY ./assets/ /
 RUN chmod +x /usr/local/bin/wait-for.sh && \
     chmod +x /usr/local/bin/iwfstartup.sh && \
-    chmod +x /usr/local/bin/iwfsconsole.sh
+    chmod +x /usr/local/bin/iwfsfconsole.sh
 
 # Set time zone
 RUN rm /etc/localtime && \
