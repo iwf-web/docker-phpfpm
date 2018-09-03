@@ -3,13 +3,17 @@
 
 DATA_PATH=/data/dockerinit.d
 RUN_ONCE_PATH=${DATA_PATH}/initial
-RUN_ONCE_FLAG=${RUN_ONCE_PATH}/initial-run-done
+RUN_ONCE_FLAG=${FLAGS_PATH}/initial-run-done
 
 echo -e "\n------------------------------------------------------------"
 echo "$(date): Starting up ..."
 
+if [ ! -d "${FLAGS_PATH}" ]; then
+    echo "$(date): (INITIAL) The folder '${FLAGS_PATH}' does not exist. Please mount it as a volume to support running initial scripts in ${RUN_ONCE_PATH}."
+    echo "$(date): (INITIAL) To change the folder please override the environment variable FLAGS_PATH."
+fi
 
-if [ -d "$RUN_ONCE_PATH" ]; then
+if [ -d "$RUN_ONCE_PATH" && -d "${FLAGS_PATH}" ]; then
     if [ -f "$RUN_ONCE_FLAG" ]; then
       echo "$(date): (INITIAL) Flag file found -- not executing files in "initial" folder."
       echo "$(date): (INITIAL) Please delete the file '${RUN_ONCE_FLAG}' if you want to run the scripts in ${RUN_ONCE_PATH} again.";

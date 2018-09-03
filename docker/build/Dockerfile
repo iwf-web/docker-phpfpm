@@ -15,6 +15,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 # this variable needs to be defined for each environment
 ENV RUNTIME_ENVIRONMENT=dev
 
+# this variable MAY be overridden to change the path where flag files are written to
+# this is currently only used by the iwfstartup.sh file
+ENV FLAGS_PATH=/data/flags
+
 # Add labels
 LABEL io.web-solutions.git-branch=$GIT_BRANCH \
     io.web-solutions.git-commit=$GIT_COMMIT \
