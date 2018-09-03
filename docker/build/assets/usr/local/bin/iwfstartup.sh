@@ -1,7 +1,7 @@
 #!/bin/bash
 #set -x
 
-DATA_PATH=data/dockerinit.d
+DATA_PATH=/data/dockerinit.d
 RUN_ONCE_PATH=${DATA_PATH}/initial
 RUN_ONCE_FLAG=${RUN_ONCE_PATH}/initial-run-done
 
