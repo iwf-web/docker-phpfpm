@@ -13,7 +13,7 @@ if [ ! -d "${FLAGS_PATH}" ]; then
     echo "$(date): (INITIAL) To change the folder please override the environment variable FLAGS_PATH."
 fi
 
-if [ -d "$RUN_ONCE_PATH" && -d "${FLAGS_PATH}" ]; then
+if [ -d "$RUN_ONCE_PATH" ] && [ -d "${FLAGS_PATH}" ]; then
     if [ -f "$RUN_ONCE_FLAG" ]; then
       echo "$(date): (INITIAL) Flag file found -- not executing files in "initial" folder."
       echo "$(date): (INITIAL) Please delete the file '${RUN_ONCE_FLAG}' if you want to run the scripts in ${RUN_ONCE_PATH} again.";
@@ -30,8 +30,8 @@ if [ -d "$RUN_ONCE_PATH" && -d "${FLAGS_PATH}" ]; then
       echo "$(date): (First start) Wrote flag file to prevent running the initial scripts again.";
 
     fi
-else
-  echo "$(date): (INITIAL) Folder '${RUN_ONCE_PATH}' not found -- please consider adding it and move the scripts that should only be run on the first deployment."
+elif [ ! -d "$RUN_ONCE_PATH" ]; then
+  echo "$(date): (INITIAL) Folder '${RUN_ONCE_PATH}' not found -- please consider adding it and move the scripts that should only be run on the first deployment.";
 fi
 
 echo "$(date): Executing startup scripts with /bin/sh ..."
