@@ -10,6 +10,10 @@ ARG BUILD_CREATOR
 ARG BUILD_NUMBER
 ARG TIMEZONE=Europe/Zurich
 
+# default locale: see https://wiki.debian.org/Locale // do not use LC_ALL because it overrides anything
+ENV LANG=de_CH.UTF-8
+ENV LANGUAGE=de_CH.UTF-8
+
 ENV DEBIAN_FRONTEND=noninteractive
 
 # this variable needs to be defined for each environment
@@ -51,20 +55,14 @@ RUN  apt-get update && \
      netcat \
      wget \
      gnupg \
-     cron
+     cron \
+     locales
 
 # Install base PHP stuff
 RUN apt-get update && apt-get --no-install-recommends install -y \
     zlib1g-dev \
     libicu-dev \
     g++ \
-#    php5-mysql \
-#    php5-curl \
-#    php5-common \
-#    php5-gd \
-#    php5-imagick \
-#    php5-intl \
-#    php5-dev \
     libcurl4-gnutls-dev \
     libsqlite3-dev \
     libfreetype6-dev \
@@ -105,6 +103,13 @@ RUN chmod +x /usr/local/bin/wait-for.sh && \
     chmod +x /usr/local/bin/iwfsfconsole.sh && \
     chmod +x /usr/local/bin/enable-xdebug-mod && \
     chmod +x /usr/local/bin/disable-xdebug-mod
+
+# create locale files
+RUN echo "de_CH.UTF-8 UTF-8" > /etc/locale.gen && \
+    echo "de_CH ISO-8859-1" >> /etc/locale.gen && \
+    echo "de_DE.UTF-8 UTF-8" >> /etc/locale.gen && \
+    echo "de_DE ISO-8859-1" >> /etc/locale.gen && \
+    locale-gen
 
 # Set time zone
 RUN rm /etc/localtime && \
