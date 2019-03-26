@@ -1,6 +1,6 @@
-FROM php:7.1-fpm-jessie
+FROM php:7.1-fpm
 
-MAINTAINER Michel Clément <m.clement@iwf.ch>
+MAINTAINER Michel Clément <m.clement@iwf.ch>, Jens Hassler <j.hassler@iwf.ch>
 
 # Argument variables
 ARG GIT_COMMIT
@@ -30,8 +30,6 @@ LABEL io.web-solutions.git-branch=$GIT_BRANCH \
     io.web-solutions.build-creator=$BUILD_CREATOR \
     io.web-solutions.build-number=$BUILD_NUMBER
 
-# Set different host due to ip-location redir errors...
-RUN sed -i "s/httpredir.debian.org/`curl -s -D - http://httpredir.debian.org/demo/debian/ | awk '/^Link:/ { print $2 }' | sed -e 's@<http://\(.*\)/debian/>;@\1@g'`/" /etc/apt/sources.list
 
 # Update System, install base stuff
 RUN  apt-get update && \
@@ -71,7 +69,7 @@ RUN apt-get update && apt-get --no-install-recommends install -y \
     libjpeg-dev \
     libjpeg62-turbo-dev \
     libpng-dev && \
-
+    \
     docker-php-ext-install curl && \
     docker-php-ext-install pdo pdo_mysql pdo_sqlite && \
     docker-php-ext-install soap && \
