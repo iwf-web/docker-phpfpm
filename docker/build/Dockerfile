@@ -54,7 +54,8 @@ RUN  apt-get update && \
      wget \
      gnupg \
      cron \
-     locales
+     locales \
+     procps
 
 # Install base PHP stuff
 RUN apt-get update && apt-get --no-install-recommends install -y \
