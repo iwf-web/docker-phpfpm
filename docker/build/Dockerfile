@@ -55,7 +55,8 @@ RUN  apt-get update && \
      wget \
      gnupg \
      cron \
-     locales
+     locales \
+     procps
 
 # manually setup man directories because the new PHP base image seems to use a slim debian package not including manpages
 # some package install scripts pretend they should be there
@@ -104,6 +105,7 @@ COPY ./assets/ /
 RUN chmod +x /usr/local/bin/wait-for.sh && \
     chmod +x /usr/local/bin/iwfstartup.sh && \
     chmod +x /usr/local/bin/iwfsfconsole.sh && \
+    chmod +x /usr/local/bin/iwfcronenv.sh && \
     chmod +x /usr/local/bin/enable-xdebug-mod && \
     chmod +x /usr/local/bin/disable-xdebug-mod
 
