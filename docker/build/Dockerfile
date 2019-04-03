@@ -35,6 +35,7 @@ LABEL io.web-solutions.git-branch=$GIT_BRANCH \
 RUN  apt-get update && \
      apt-get install --no-install-recommends -y \
      binutils \
+     less \
      curl \
      git \
      git-core \
@@ -55,6 +56,10 @@ RUN  apt-get update && \
      gnupg \
      cron \
      locales
+
+# manually setup man directories because the new PHP base image seems to use a slim debian package not including manpages
+# some package install scripts pretend they should be there
+RUN for i in $(seq 1 8); do mkdir -p "/usr/share/man/man${i}"; done
 
 # Install base PHP stuff
 RUN apt-get update && apt-get --no-install-recommends install -y \
