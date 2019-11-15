@@ -98,7 +98,9 @@ if [[ -n ${DEF_BRANCH} ]]; then
     --build-arg BUILD_NUMBER="$BUILD_NUMBER" \
     .
 
-  if [ $? -eq 0 ]; then
+  DOCKER_BUILD_EXITCODE=$?
+
+  if [ $DOCKER_BUILD_EXITCODE -eq 0 ]; then
     if [[ DEF_PUSHDOCKERREGISTRY -eq 1 ]]; then
       echo "Pushing image to Docker Registry ..."
       docker push $DOCKER_NAME/$BUILD_NAME:$DOCKER_LATEST_TAG
@@ -112,6 +114,7 @@ if [[ -n ${DEF_BRANCH} ]]; then
     fi
   else
     echo -e "\nBuild failed."
+    exit $DOCKER_BUILD_EXITCODE
   fi
 
   if [ -d ${CODE_BASE} ]; then rm -rf ${CODE_BASE}; fi

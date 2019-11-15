@@ -26,16 +26,14 @@ LABEL io.web-solutions.git-branch=$GIT_BRANCH \
     io.web-solutions.build-creator=$BUILD_CREATOR \
     io.web-solutions.build-number=$BUILD_NUMBER
 
-# Set time zone
-RUN rm /etc/localtime && \
-    ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
-    echo date.timezone = \"${TIMEZONE}\" >>/usr/local/etc/php/conf.d/php.ini
-
-# set TERM to xterm for bash on 2nd top line
-RUN sed -i '2i\'"export TERM=xterm" /etc/bash.bashrc
-
-# add www-data to the sudoers to allow changing to root anytime
-RUN echo "www-data ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+# copy assets
+COPY ./assets/ /
+RUN chmod +x /usr/local/bin/wait-for.sh && \
+    chmod +x /usr/local/bin/iwfstartup.sh && \
+    chmod +x /usr/local/bin/iwfsfconsole.sh && \
+    chmod +x /usr/local/bin/iwfcronenv.sh && \
+    chmod +x /usr/local/bin/enable-xdebug-mod && \
+    chmod +x /usr/local/bin/disable-xdebug-mod
 
 # install locales first
 RUN apt-get clean \
@@ -113,14 +111,16 @@ RUN apt-get --no-install-recommends install -y \
     docker-php-ext-install opcache && \
     docker-php-ext-enable opcache
 
-# copy assets
-COPY ./assets/ /
-RUN chmod +x /usr/local/bin/wait-for.sh && \
-    chmod +x /usr/local/bin/iwfstartup.sh && \
-    chmod +x /usr/local/bin/iwfsfconsole.sh && \
-    chmod +x /usr/local/bin/iwfcronenv.sh && \
-    chmod +x /usr/local/bin/enable-xdebug-mod && \
-    chmod +x /usr/local/bin/disable-xdebug-mod
+# Set time zone
+RUN rm /etc/localtime && \
+    ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
+    echo date.timezone = \"${TIMEZONE}\" >>/usr/local/etc/php/conf.d/php.ini
+
+# set TERM to xterm for bash on 2nd top line
+RUN sed -i '2i\'"export TERM=xterm" /etc/bash.bashrc
+
+# add www-data to the sudoers to allow changing to root anytime
+RUN echo "www-data ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # Clean up
 RUN apt-get clean \
