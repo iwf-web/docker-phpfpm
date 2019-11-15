@@ -1,4 +1,4 @@
-FROM php:7.1-fpm-stretch
+FROM php:7.3-fpm-stretch
 
 MAINTAINER Michel Clément <m.clement@iwf.ch>, Jens Hassler <j.hassler@iwf.ch>
 
@@ -9,10 +9,6 @@ ARG GIT_DIRTY=undefined
 ARG BUILD_CREATOR
 ARG BUILD_NUMBER
 ARG TIMEZONE=Europe/Zurich
-
-# default locale: see https://wiki.debian.org/Locale // do not use LC_ALL because it overrides anything
-ENV LANG=de_CH.UTF-8
-ENV LANGUAGE=de_CH.UTF-8
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -30,10 +26,35 @@ LABEL io.web-solutions.git-branch=$GIT_BRANCH \
     io.web-solutions.build-creator=$BUILD_CREATOR \
     io.web-solutions.build-number=$BUILD_NUMBER
 
+# Set time zone
+RUN rm /etc/localtime && \
+    ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
+    echo date.timezone = \"${TIMEZONE}\" >>/usr/local/etc/php/conf.d/php.ini
+
+# set TERM to xterm for bash on 2nd top line
+RUN sed -i '2i\'"export TERM=xterm" /etc/bash.bashrc
+
+# add www-data to the sudoers to allow changing to root anytime
+RUN echo "www-data ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# install locales first
+RUN apt-get clean \
+    && apt-get update \
+    && apt-get install --no-install-recommends -y locales
+
+# default locale: see https://wiki.debian.org/Locale // do not use LC_ALL because it overrides anything
+ENV LANG=de_CH.UTF-8
+ENV LANGUAGE=de_CH.UTF-8
+
+# create locale files
+RUN echo "de_CH.UTF-8 UTF-8" > /etc/locale.gen && \
+    echo "de_CH ISO-8859-1" >> /etc/locale.gen && \
+    echo "de_DE.UTF-8 UTF-8" >> /etc/locale.gen && \
+    echo "de_DE ISO-8859-1" >> /etc/locale.gen && \
+    locale-gen
 
 # Update System, install base stuff
-RUN  apt-get update && \
-     apt-get install --no-install-recommends -y \
+RUN  apt-get install --no-install-recommends -y \
      binutils \
      less \
      curl \
@@ -55,7 +76,6 @@ RUN  apt-get update && \
      wget \
      gnupg \
      cron \
-     locales \
      procps
 
 # manually setup man directories because the new PHP base image seems to use a slim debian package not including manpages
@@ -63,7 +83,8 @@ RUN  apt-get update && \
 RUN for i in $(seq 1 8); do mkdir -p "/usr/share/man/man${i}"; done
 
 # Install base PHP stuff
-RUN apt-get update && apt-get --no-install-recommends install -y \
+RUN apt-get --no-install-recommends install -y \
+    libzip-dev \
     zlib1g-dev \
     libicu-dev \
     g++ \
@@ -92,14 +113,6 @@ RUN apt-get update && apt-get --no-install-recommends install -y \
     docker-php-ext-install opcache && \
     docker-php-ext-enable opcache
 
-# Clean up
-RUN apt-get clean \
-    && \
-    rm -rf /tmp/* /var/tmp/* /usr/share/doc/*
-
-# Remove lists to prevent installations
-# RUN rm -rf /var/lib/apt/lists/*
-
 # copy assets
 COPY ./assets/ /
 RUN chmod +x /usr/local/bin/wait-for.sh && \
@@ -109,23 +122,13 @@ RUN chmod +x /usr/local/bin/wait-for.sh && \
     chmod +x /usr/local/bin/enable-xdebug-mod && \
     chmod +x /usr/local/bin/disable-xdebug-mod
 
-# create locale files
-RUN echo "de_CH.UTF-8 UTF-8" > /etc/locale.gen && \
-    echo "de_CH ISO-8859-1" >> /etc/locale.gen && \
-    echo "de_DE.UTF-8 UTF-8" >> /etc/locale.gen && \
-    echo "de_DE ISO-8859-1" >> /etc/locale.gen && \
-    locale-gen
+# Clean up
+RUN apt-get clean \
+    && \
+    rm -rf /tmp/* /var/tmp/* /usr/share/doc/*
 
-# Set time zone
-RUN rm /etc/localtime && \
-    ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
-    echo date.timezone = \"${TIMEZONE}\" >>/usr/local/etc/php/conf.d/php.ini
-
-# set TERM to xterm for bash on 2nd top line
-RUN sed -i '2i\'"export TERM=xterm" /etc/bash.bashrc
-
-# add www-data to the sudoers to allow changing to root anytime
-RUN echo "www-data ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+# Remove lists to prevent installations
+# RUN rm -rf /var/lib/apt/lists/*
 
 # install composer
 RUN  curl -sS https://getcomposer.org/installer | php && \
@@ -142,7 +145,7 @@ WORKDIR /var/www
 RUN     chown -R www-data:www-data /var/www
 
 # use www-data to start supervisor
-USER www-data
+#USER www-data
 
 # Exposed port(s)
 EXPOSE 9000
