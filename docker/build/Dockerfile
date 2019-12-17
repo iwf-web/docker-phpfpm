@@ -1,4 +1,4 @@
-FROM php:7.3-fpm-stretch
+FROM php:7.3-fpm-buster
 
 MAINTAINER Michel Clément <m.clement@iwf.ch>, Jens Hassler <j.hassler@iwf.ch>
 
