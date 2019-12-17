@@ -3,7 +3,7 @@
 
 DOCKER_NAME=iwfwebsolutions
 BUILD_NAME=phpfpm
-GIT_REPO=git@git.iwf.io:docker/iwf-phpfpm.git
+GIT_REPO=https://github.com/iwf-web/docker-phpfpm.git
 CODE_BASE=./code
 DEF_PUSHDOCKERREGISTRY=0
 
