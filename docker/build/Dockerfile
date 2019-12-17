@@ -1,4 +1,4 @@
-FROM php:7.3-fpm-stretch
+FROM php:7.4-fpm-buster
 
 MAINTAINER Michel Clément <m.clement@iwf.ch>, Jens Hassler <j.hassler@iwf.ch>
 
@@ -98,7 +98,8 @@ RUN apt-get --no-install-recommends install -y \
     docker-php-ext-install curl && \
     docker-php-ext-install pdo pdo_mysql pdo_sqlite && \
     docker-php-ext-install soap && \
-    docker-php-ext-configure gd --with-jpeg-dir --with-png-dir --with-freetype-dir && \
+    # the "with" stuff has changed for PHP 7.4, see https://github.com/docker-library/php/pull/910#issuecomment-559383597
+    docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install gd && \
     docker-php-ext-install intl && \
     docker-php-ext-install iconv && \

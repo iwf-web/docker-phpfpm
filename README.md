@@ -1,4 +1,4 @@
-# IWF PHP-FPM 7.3 Docker Base Image
+# IWF PHP-FPM 7.4 Docker Base Image
 
 
 ## General docs
