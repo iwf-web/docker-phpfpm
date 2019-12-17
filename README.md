@@ -17,13 +17,15 @@ The following releases are available:
 
 - [releases/PHP-PFM-7.1](https://github.com/iwf-web/docker-phpfpm/tree/releases/PHP-FPM-7.1)
 - [releases/PHP-PFM-7.3](https://github.com/iwf-web/docker-phpfpm/tree/releases/PHP-FPM-7.3)
+- [releases/PHP-PFM-7.4](https://github.com/iwf-web/docker-phpfpm/tree/releases/PHP-FPM-7.4)
+
 
 See the branches for release specific information.
 
 
 ## Links
 
-The image is built weekly based on the official image `php:7.X-fpm-stretch`.
+The image is built weekly based on the official image `php:7.X-fpm-stretch` (7.1/7.3) or `php:7.X-fpm-buster` (7.4).
 
 It's available here: https://hub.docker.com/repository/docker/iwfwebsolutions/phpfpm
 
