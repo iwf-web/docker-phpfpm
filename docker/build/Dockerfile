@@ -145,8 +145,8 @@ ENV HOME /var/www
 WORKDIR /var/www
 RUN     chown -R www-data:www-data /var/www
 
-# use www-data to start supervisor
-#USER www-data
+# www-data is default user
+USER www-data
 
 # Exposed port(s)
 EXPOSE 9000
