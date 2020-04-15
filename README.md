@@ -104,6 +104,7 @@ Environment variable  | default value  | Description
 ----------------------|----------------|---------------
 RUNTIME_ENVIRONMENT   | dev            | should be used by custom scripts to use the correct settings. Suggested values: `local`, `dev`, `qa`, `prod`
 FLAGS_PATH            | /data/flags    | Used by scripts to store flag files that must survive a re-deployment.<br>Currently only used by `iwfstartup.sh` to mark the execution of "run once" initial scripts.
+CLEAR_SESSIONS_IN     | (empty)        | If you store PHP sessions in files you should specify the directory here where your session files are located. A cronjob will then execute the PHP garbage collection for session files every night.
 
 
 ## Included helper scripts
