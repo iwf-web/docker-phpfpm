@@ -8,6 +8,9 @@ RUN_ONCE_FLAG=${FLAGS_PATH}/initial-run-done
 echo -e "\n------------------------------------------------------------"
 echo "$(date): Starting up ..."
 
+echo "$(date): Dumping environment variables to /etc/environment."
+sudo -E /usr/local/bin/update-env-file.sh
+
 if [ ! -d "${FLAGS_PATH}" ]; then
     echo "$(date): (INITIAL) The folder '${FLAGS_PATH}' does not exist. Please mount it as a volume to support running initial scripts in ${RUN_ONCE_PATH}."
     echo "$(date): (INITIAL) To change the folder please override the environment variable FLAGS_PATH."

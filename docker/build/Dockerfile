@@ -33,7 +33,9 @@ RUN chmod +x /usr/local/bin/wait-for.sh && \
     chmod +x /usr/local/bin/iwfsfconsole.sh && \
     chmod +x /usr/local/bin/iwfcronenv.sh && \
     chmod +x /usr/local/bin/enable-xdebug-mod && \
-    chmod +x /usr/local/bin/disable-xdebug-mod
+    chmod +x /usr/local/bin/disable-xdebug-mod && \
+    chmod +x /usr/local/bin/update-env-file.sh && \
+    chmod +x /usr/local/bin/clear-sessions.sh
 
 # install locales first
 RUN apt-get clean \
@@ -144,6 +146,10 @@ ENV HOME /var/www
 # Define working directory.
 WORKDIR /var/www
 RUN     chown -R www-data:www-data /var/www
+
+# add cronjob for root to clean PHP session files every night (if env var CLEAR_SESSIONS_IN is set with the session files directory)
+# user's www-data cronjobs are usually overwritten by projects
+RUN (crontab -l ; echo "0 0 * * * /bin/bash /usr/local/bin/clear-sessions.sh") | crontab -
 
 # www-data is default user
 USER www-data
