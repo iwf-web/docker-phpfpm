@@ -3,7 +3,7 @@
 
 ## Overview
 
-This is a PHP-FPM image based on the official `php:7.3-fpm` image. 
+This is a PHP-FPM image based on the official `php:7.X-fpm` image. 
 
 It's a vital part of the IWF application stack.
 
@@ -22,6 +22,8 @@ The following releases are available:
 
 See the branches for release specific information.
 
+The branches for PHP 7.1 and 7.3 will be deprecated soon.
+
 
 ## Links
 
@@ -36,7 +38,7 @@ You should always use the tag: `iwfwebsolutions/phpfpm:7.X-latest`, replacing `X
 
 The X part of the version number `7.MINOR-X` is always increased when we update the image configuration (e.g. config files).
 
-It is NOT an indication to the patch level of the base image. It's **always** the **latest** PHP image of the supplied minor version (currently 7.1 and 7.3).
+It is NOT an indication to the patch level of the base image. It's **always** the **latest** PHP image of the supplied minor version.
 
 See the CHANGELOG to find out the details.
 
@@ -59,7 +61,7 @@ Change                      | Description
 ----------------------------|--------------
 Installed software (OS level)  | curl, git, unzip, vim, wget, ruby, openssh-client, sudo, dnsutils, openssl, nano, supervisor, netcat, wget, gnupg, cron, composer, locales, procps, less
 Installed PHP modules       | curl, pdo, pdo_mysql, pdo_sqlite, soap, gd, intl, iconv, exif, zip, imagick, opcache
-php.ini                     | see below and the [php.ini file](https://github.com/iwf-web/docker-phpfpm/blob/releases/PHP-FPM-7.3/docker/build/assets/usr/local/etc/php/conf.d/php.ini)
+php.ini                     | see below and the [php.ini file](https://github.com/iwf-web/docker-phpfpm/blob/releases/PHP-FPM-7.4/docker/build/assets/usr/local/etc/php/conf.d/php.ini)
 Supervisor daemon config    | `/etc/supervisor/conf.d/iwfsupervisor.conf`: Supervises the services **php-fpm** and **cron**.<br>Logs go to: `/var/log/supervisor/`
 Installed scripts           | see below (helper scripts)
 OS settings                 | see below (OS settings)
@@ -104,7 +106,7 @@ Environment variable  | default value  | Description
 ----------------------|----------------|---------------
 RUNTIME_ENVIRONMENT   | dev            | should be used by custom scripts to use the correct settings. Suggested values: `local`, `dev`, `qa`, `prod`
 FLAGS_PATH            | /data/flags    | Used by scripts to store flag files that must survive a re-deployment.<br>Currently only used by `iwfstartup.sh` to mark the execution of "run once" initial scripts.
-CLEAR_SESSIONS_IN     | (empty)        | If you store PHP sessions in files you should specify the directory here where your session files are located. A cronjob will then execute the PHP garbage collection for session files every night.
+CLEAR_SESSIONS_IN     | (empty)        | (only in 7.4) If you store PHP sessions in files you should specify the directory here where your session files are located. A cronjob will then execute the PHP garbage collection for session files every night.
 
 
 ## Included helper scripts
