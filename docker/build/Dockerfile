@@ -127,9 +127,11 @@ RUN sed -i '2i\'"export TERM=xterm" /etc/bash.bashrc
 # add www-data to the sudoers to allow changing to root anytime
 RUN echo "www-data ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-# install composer
-RUN  curl -sS https://getcomposer.org/installer | php && \
-     mv composer.phar /usr/local/bin/composer
+# install composer 1 - we should upgrade to composer 2 soon
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+    php composer-setup.php --version=1.10.16 && \
+    mv composer.phar /usr/local/bin/composer && \
+    rm -f composer-setup.php
 
 # Build base structure
 RUN mkdir -p /app
