@@ -130,9 +130,11 @@ RUN apt-get clean \
 # Remove lists to prevent installations
 # RUN rm -rf /var/lib/apt/lists/*
 
-# install composer
-RUN  curl -sS https://getcomposer.org/installer | php && \
-     mv composer.phar /usr/local/bin/composer
+# install composer 1 - we should upgrade to composer 2 soon
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+    php composer-setup.php --version=1.10.16 && \
+    mv composer.phar /usr/local/bin/composer && \
+    rm -f composer-setup.php
 
 # Build base structure
 RUN mkdir -p /app
