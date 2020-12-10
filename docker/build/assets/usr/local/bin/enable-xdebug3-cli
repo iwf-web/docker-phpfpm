@@ -1,0 +1,1 @@
+export XDEBUG_CONFIG="discover_client_host=1 mode=debug client_host=10.0.2.2"
