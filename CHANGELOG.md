@@ -1,7 +1,16 @@
 # Changelog
 
-`7.4.3` (2021-03-01)
-- get rid of "sudo su" after starting container
+`7.4.6` (2021-03-01)
+- get rid pf "sudo su" after container startup
+
+`7.4.5` (2020-10-28)
+- install composer 1 instead of the newest (2)
+
+`7.4.4` (2020-07-20)
+- set PHP memory_limit to -1 because we set memory limits through Docker
+
+`7.4.3` (2020-04-15)
+- add CLEAR_SESSIONS_IN
 
 `7.4-2` (2020-03-06)
 - Bugfix user-switch
