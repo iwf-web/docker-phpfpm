@@ -15,19 +15,14 @@ See our [Symfony Vagrant Docker Example Project](https://github.com/iwf-web/symf
 
 The following releases are available:
 
-- [releases/PHP-PFM-7.1](https://github.com/iwf-web/docker-phpfpm/tree/releases/PHP-FPM-7.1)
-- [releases/PHP-PFM-7.3](https://github.com/iwf-web/docker-phpfpm/tree/releases/PHP-FPM-7.3)
 - [releases/PHP-PFM-7.4](https://github.com/iwf-web/docker-phpfpm/tree/releases/PHP-FPM-7.4)
 
-
 See the branches for release specific information.
-
-The branches for PHP 7.1 and 7.3 will be deprecated soon.
 
 
 ## Links
 
-The image is built weekly based on the official image `php:7.X-fpm-stretch` (7.1/7.3) or `php:7.X-fpm-buster` (7.4).
+The image is built weekly based on the official image `php:7.X-fpm-buster` (7.4).
 
 It's available here: https://hub.docker.com/repository/docker/iwfwebsolutions/phpfpm
 
@@ -73,13 +68,14 @@ Command                     | `/usr/bin/supervisord -c /etc/supervisor/conf.d/iw
 - default user: www-data
 - scripts will be started as: www-data
 - supervisor starts as `root`, php-fpm runs as `root`, php-fpm childs run as `www-data`, cron runs as `root`
+- `sudo` to root is possible in init script, but sudo is removed after container startup (security reasons, www-data should not be allowed to gain root rights via sudo)
 
 ### updated php.ini settings
 
 - max_execution_time = 300
 - date.timezone = 'Europe/Zurich'
 - max_input_time = 60
-- memory_limit = 2048M
+- memory_limit = -1
 - upload_max_filesize = 500M
 - max_file_uploads = 20
 - opcache.enable=1
