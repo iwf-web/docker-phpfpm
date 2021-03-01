@@ -131,7 +131,7 @@ Executes all scripts in `/data/dockerinit.d/initial` **ONCE**, ordered by file n
 
 Used for Cronjobs. Executes commands with correct environment. Use absolute paths.
 
-For this to work, the script `XX_export_variables.sh` should exist in `/data/dockerinit.d`, which adds variables to the Env file `/usr/local/bin/iwfsfconsole.env`.
+The environment variables are dumped to the file `/etc/environment` by the script `iwfstartup.sh` (calling `update-env-file.sh`). The variables in `/etc/environment` can be accessed by cron jobs.
 
 See the usage example in our [Example Project](https://github.com/iwf-web/symfony-vagrant-docker-example)
 
