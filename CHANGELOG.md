@@ -2,6 +2,7 @@
 
 `7.4.6` (2021-03-01)
 - get rid pf "sudo su" after container startup
+- update `enable-xdebug-cli` script to be compatible with XDebug 3
 
 `7.4.5` (2020-10-28)
 - install composer 1 instead of the newest (2)
