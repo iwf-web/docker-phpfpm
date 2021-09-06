@@ -140,6 +140,16 @@ See the usage example in our [Example Project](https://github.com/iwf-web/symfon
 
 ## Extension points (change or extend configuration)
 
+### php.ini
+
+To override specific options in the php.ini file, just copy your specific .ini-Files to `/usr/local/etc/php/conf.d`. This directory is automatically scanned for .ini files, and they're applied alphabetically.
+
+E.g. to make sure that some project specific settings are updated you can name the file e.g. `zzz-project-overrides.ini` and put it into `/usr/local/etc/php/conf.d`.
+
+To see which ini files were applied, see the output of `php -i` (section "Additional ini files parsed").
+
+
+### Startup scripts
 Use this image as a base image for your own application image.
 
 A good to control what's called on application startup is the directory: `/data/dockerinit.d`
