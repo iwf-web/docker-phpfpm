@@ -1,6 +1,6 @@
-FROM php:7.4-fpm-buster
+FROM php:8.0-fpm-buster
 
-MAINTAINER Michel Clément <m.clement@iwf.ch>, Jens Hassler <j.hassler@iwf.ch>
+MAINTAINER Jens Hassler <j.hassler@iwf.ch>
 
 # Argument variables
 ARG GIT_COMMIT
@@ -133,9 +133,9 @@ RUN apt-get clean \
 # Remove lists to prevent installations
 # RUN rm -rf /var/lib/apt/lists/*
 
-# install composer 1 - we should upgrade to composer 2 soon
+# install composer 2
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    php composer-setup.php --version=1.10.16 && \
+    php composer-setup.php --version=2.1.9 && \
     mv composer.phar /usr/local/bin/composer && \
     rm -f composer-setup.php
 
