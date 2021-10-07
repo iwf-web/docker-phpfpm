@@ -1,5 +1,8 @@
 # Changelog
 
+`8.0-3` (2021-10-07)
+- add webp support
+
 `8.0-2` (2021-10-07)
 - "latest" tag fix
 

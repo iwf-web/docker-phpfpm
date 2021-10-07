@@ -95,13 +95,14 @@ RUN apt-get --no-install-recommends install -y \
     libmagickwand-dev \
     libjpeg-dev \
     libjpeg62-turbo-dev \
+    libwebp-dev \
     libpng-dev && \
     \
     docker-php-ext-install curl && \
     docker-php-ext-install pdo pdo_mysql pdo_sqlite && \
     docker-php-ext-install soap && \
     # the "with" stuff has changed for PHP 7.4, see https://github.com/docker-library/php/pull/910#issuecomment-559383597
-    docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
     docker-php-ext-install gd && \
     docker-php-ext-install intl && \
     docker-php-ext-install iconv && \
