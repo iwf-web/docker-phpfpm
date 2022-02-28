@@ -3,7 +3,7 @@
 
 ## Overview
 
-This is a PHP-FPM image based on the official `php:7.X-fpm` image. 
+This is a PHP-FPM image based on the official `php:8.X-fpm` image. 
 
 It's a vital part of the IWF application stack.
 
@@ -16,22 +16,23 @@ See our [Symfony Vagrant Docker Example Project](https://github.com/iwf-web/symf
 The following releases are available:
 
 - [releases/PHP-PFM-7.4](https://github.com/iwf-web/docker-phpfpm/tree/releases/PHP-FPM-7.4)
+- [releases/PHP-PFM-8.1](https://github.com/iwf-web/docker-phpfpm/tree/releases/PHP-FPM-8.1)
 
 See the branches for release specific information.
 
 
 ## Links
 
-The image is built weekly based on the official image `php:7.X-fpm-buster` (7.4).
+The image is built weekly based on the official image `php:8.X-fpm-buster` (8.1).
 
 It's available here: https://hub.docker.com/repository/docker/iwfwebsolutions/phpfpm
 
-You should always use the tag: `iwfwebsolutions/phpfpm:7.X-latest`, replacing `X` with the PHP minor version.
+You should always use the tag: `iwfwebsolutions/phpfpm:8.X-latest`, replacing `X` with the PHP minor version.
 
 
 ## Versions
 
-The X part of the version number `7.MINOR-X` is always increased when we update the image configuration (e.g. config files).
+The X part of the version number `8.MINOR-X` is always increased when we update the image configuration (e.g. config files).
 
 It is NOT an indication to the patch level of the base image. It's **always** the **latest** PHP image of the supplied minor version.
 
@@ -102,7 +103,7 @@ Environment variable  | default value  | Description
 ----------------------|----------------|---------------
 RUNTIME_ENVIRONMENT   | dev            | should be used by custom scripts to use the correct settings. Suggested values: `local`, `dev`, `qa`, `prod`
 FLAGS_PATH            | /data/flags    | Used by scripts to store flag files that must survive a re-deployment.<br>Currently only used by `iwfstartup.sh` to mark the execution of "run once" initial scripts.
-CLEAR_SESSIONS_IN     | (empty)        | (only in 7.4) If you store PHP sessions in files you should specify the directory here where your session files are located. A cronjob will then execute the PHP garbage collection for session files every night.
+CLEAR_SESSIONS_IN     | (empty)        | If you store PHP sessions in files you should specify the directory here where your session files are located. A cronjob will then execute the PHP garbage collection for session files every night.
 
 
 ## Included helper scripts
