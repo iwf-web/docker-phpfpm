@@ -82,6 +82,18 @@ Command                     | `/usr/bin/supervisord -c /etc/supervisor/conf.d/iw
 - opcache.enable=1
 - opcache.max_accelerated_files=20000
 
+### updated php-fpm settings
+
+- pm = dynamic
+- pm.max_children = 15
+- pm.start_servers = 5
+- pm.min_spare_servers = 5
+- pm.max_spare_servers = 10
+
+(only in 7.4 and 8.1 branches)
+
+This is specified in `/usr/local/etc/php-fpm.d/zz-base.conf`. You can override these values by overriding this file or by adding a file with a name coming later in the alphabet.
+
 
 ### updated OS settings
 
