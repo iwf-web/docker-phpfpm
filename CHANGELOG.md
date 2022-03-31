@@ -1,5 +1,8 @@
 # Changelog
 
+`7.4.7` (2022-03-31)
+- allow more php-fpm processes
+
 `7.4.6` (2021-03-01)
 - get rid pf "sudo su" after container startup
 - update `enable-xdebug-cli` script to be compatible with XDebug 3
