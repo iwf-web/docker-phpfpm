@@ -1,9 +1,9 @@
 # Changelog
 
-`8.0.2` (2022-03-31)
+`8.1.2` (2022-03-31)
 - adjust php-fpm config to allow more servers processes
 
-`8.0.1` (2021-12-16)
+`8.1.1` (2021-12-16)
 - new PHP 8.1 branch
 
 `8.0-3` (2021-10-07)
