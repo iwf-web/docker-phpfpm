@@ -156,6 +156,8 @@ RUN (crontab -l ; echo "0 0 * * * /bin/bash /usr/local/bin/clear-sessions.sh") |
 
 # www-data is default user
 USER www-data
+# Reset SHELL variable. Overwritten by "USER" and the shell defined in /etc/passwd
+ENV SHELL /bin/bash
 
 # Exposed port(s)
 EXPOSE 9000
