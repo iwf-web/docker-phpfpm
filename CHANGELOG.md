@@ -1,9 +1,12 @@
 # Changelog
 
-`8.1.2` (2022-03-31)
+`8.1-3` (2022-10-24)
+- update composer to v2.4.3
+
+`8.1-2` (2022-03-31)
 - adjust php-fpm config to allow more servers processes
 
-`8.1.1` (2021-12-16)
+`8.1-1` (2021-12-16)
 - new PHP 8.1 branch
 
 `8.0-3` (2021-10-07)

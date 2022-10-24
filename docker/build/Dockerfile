@@ -136,7 +136,7 @@ RUN apt-get clean \
 
 # install composer 2
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    php composer-setup.php --version=2.1.14 && \
+    php composer-setup.php --version=2.4.3 && \
     mv composer.phar /usr/local/bin/composer && \
     rm -f composer-setup.php
 
