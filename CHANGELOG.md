@@ -1,5 +1,8 @@
 # Changelog
 
+`7.4.7` (2022-10-24)
+- update composer 1 to newest 1-version 1.10.26
+
 `7.4.7` (2022-03-31)
 - allow more php-fpm processes
 
