@@ -1,5 +1,8 @@
 # Changelog
 
+`8.2.0` (2022-12-09)
+-- new PHP 8.2 branch
+
 `8.0.1` (2021-12-16)
 -- new PHP 8.1 branch
 
