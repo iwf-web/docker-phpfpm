@@ -1,5 +1,8 @@
 # Changelog
 
+`8.1-4` (2022-12-20)
+- "fix" for GIT issue CVE-2022-24765 in local development
+
 `8.1-3` (2022-10-24)
 - update composer to v2.4.3
 
