@@ -1,5 +1,8 @@
 # Changelog
 
+`7.4.9` (2022-12-20)
+- "fix" for GIT issue with CVE-2022-24765 in local development
+
 `7.4.8` (2022-10-24)
 - update composer 1 to newest 1-version 1.10.26
 
