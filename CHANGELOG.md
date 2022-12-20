@@ -1,5 +1,8 @@
 # Changelog
 
+`8.2.1` (2022-12-20)
+- "fix" for GIT issue CVE-2022-24765 with local development
+
 `8.2.0` (2022-12-09)
 -- new PHP 8.2 branch
 

@@ -163,3 +163,6 @@ EXPOSE 9000
 # Start supervisor (see http://supervisord.org) with sudo (as root)
 ENTRYPOINT ["/usr/local/bin/iwfstartup.sh"]
 CMD ["/usr/bin/sudo", "-E", "/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/iwfsupervisor.conf"]
+
+# Fix issue with GIT "detected dubious ownership in repository" error in local development due to CVE-2022-24765 (https://github.com/git/git/commit/8959555cee7ec045958f9b6dd62e541affb7e7d9)
+RUN (echo "[safe]\ndirectory = *" > /var/www/.gitconfig)
