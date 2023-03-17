@@ -37,9 +37,11 @@ RUN chmod +x /usr/local/bin/wait-for.sh && \
     chmod +x /usr/local/bin/update-env-file.sh && \
     chmod +x /usr/local/bin/clear-sessions.sh
 
+# install OS updates (security fixes)
+RUN apt-get update && apt-get -y upgrade
+
 # install locales first
 RUN apt-get clean \
-    && apt-get update \
     && apt-get install --no-install-recommends -y locales
 
 # default locale: see https://wiki.debian.org/Locale // do not use LC_ALL because it overrides anything

@@ -1,5 +1,8 @@
 # Changelog
 
+`8.2-2` (2023-03-17)
+- install OS security updates on each build
+
 `8.2-1` (2022-12-20)
 - "fix" for GIT issue CVE-2022-24765 with local development
 
