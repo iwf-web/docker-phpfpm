@@ -1,5 +1,8 @@
 # Changelog
 
+`8.1-4` (2023-03-17)
+- install Debian security updates on each build
+
 `8.1-4` (2022-12-20)
 - "fix" for GIT issue CVE-2022-24765 in local development
 
