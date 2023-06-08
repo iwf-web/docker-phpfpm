@@ -1,5 +1,8 @@
 # Changelog
 
+`8.2-3` (2023-06-08)
+- install ca-certificates package
+
 `8.2-2` (2023-03-17)
 - install OS security updates on each build
 

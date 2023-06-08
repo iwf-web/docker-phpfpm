@@ -72,6 +72,7 @@ RUN  apt-get install --no-install-recommends -y \
      dnsutils \
      ssl-cert \
      openssl \
+     ca-certificates \
      nano \
      supervisor \
      netcat \
