@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-buster
+FROM php:8.2-fpm-bookworm
 
 MAINTAINER Jens Hassler <j.hassler@iwf.ch>
 
@@ -65,8 +65,6 @@ RUN  apt-get install --no-install-recommends -y \
      unzip \
      vim \
      wget \
-     ruby \
-     ruby-dev \
      openssh-client \
      sudo \
      dnsutils \
@@ -75,8 +73,7 @@ RUN  apt-get install --no-install-recommends -y \
      ca-certificates \
      nano \
      supervisor \
-     netcat \
-     wget \
+     netcat-openbsd \
      gnupg \
      cron \
      procps
@@ -139,7 +136,7 @@ RUN apt-get clean \
 
 # install composer 2
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    php composer-setup.php --version=2.1.14 && \
+    php composer-setup.php && \
     mv composer.phar /usr/local/bin/composer && \
     rm -f composer-setup.php
 
