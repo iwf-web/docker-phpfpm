@@ -1,5 +1,11 @@
 # Changelog
 
+`8.1-6` (2023-10-24)
+- update to Debian bookworm base image
+- remove ruby packages
+- uninstall netcat after startup
+- install newest composer version
+
 `8.1-5` (2023-03-17)
 - install Debian security updates on each build
 
