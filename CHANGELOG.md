@@ -1,5 +1,11 @@
 # Changelog
 
+`8.2-4` (2023-10-24)
+- update to Debian bookworm base image
+- remove ruby packages
+- uninstall netcat after startup
+- install newest composer version
+
 `8.2-3` (2023-06-08)
 - install ca-certificates package
 
