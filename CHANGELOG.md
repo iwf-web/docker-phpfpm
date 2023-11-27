@@ -1,5 +1,8 @@
 # Changelog
 
+`8.2-5` (2023-11-09)
+- increase value of max_input_vars to 1500
+
 `8.2-4` (2023-10-24)
 - update to Debian bookworm base image
 - remove ruby packages
