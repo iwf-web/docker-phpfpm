@@ -1,5 +1,8 @@
 # Changelog
 
+`8.3-0` (2023-11-09)
+-- new PHP 8.3 branch
+
 `8.2-5` (2023-11-09)
 - increase value of max_input_vars to 1500
 

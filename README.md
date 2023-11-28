@@ -1,4 +1,4 @@
-# IWF PHP-FPM 8.2 Docker Base Image
+# IWF PHP-FPM 8.3 Docker Base Image
 
 
 ## General docs
