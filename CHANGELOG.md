@@ -1,5 +1,8 @@
 # Changelog
 
+`8.1-8` (2023-12-20)
+- add multi platform build
+
 `8.1-7` (2023-11-09)
 - increase value of max_input_vars to 1500
 
