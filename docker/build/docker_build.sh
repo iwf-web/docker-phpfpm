@@ -84,7 +84,8 @@ if [[ -n ${DEF_BRANCH} ]]; then
   echo "===> Building docker image '$BUILD_NAME' with build '$BUILD_NUMBER' ($DOCKER_LATEST_TAG) ..."
 
   # Add "-q" for silence...
-  docker build \
+  docker buildx build \
+    --platform=linux/amd64,linux/arm64 \
     --no-cache \
     --pull \
     -f Dockerfile \
