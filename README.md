@@ -149,6 +149,18 @@ The environment variables are dumped to the file `/etc/environment` by the scrip
 See the usage example in our [Example Project](https://github.com/iwf-web/symfony-vagrant-docker-example)
 
 
+## Multi platform builds
+
+To build this image for multiple platforms, you need to use `buildx`
+
+With the user that is creating the images this one-time setup is needed:
+
+```
+docker buildx create --name mybuilder --driver docker-container --bootstrap
+docker buildx use mybuilder
+```
+
+Then the image build can be done with `docker buildx build --platform=linux/amd64,linux/arm64 ...`
 
 
 ## Extension points (change or extend configuration)
