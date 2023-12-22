@@ -1,5 +1,8 @@
 # Changelog
 
+`7.4.10` (2023-12-22)
+- enable multi platform build
+
 `7.4.9` (2022-12-20)
 - "fix" for GIT issue with CVE-2022-24765 in local development
 

@@ -81,12 +81,14 @@ if [[ -n ${DEF_BRANCH} ]]; then
   cd ..
   # End: get GIT information
 
-  echo "===> Building docker image '$BUILD_NAME' with build '$BUILD_NUMBER' ($DOCKER_LATEST_TAG) ..."
+  echo "===> Building and pushing docker image '$BUILD_NAME' with build '$BUILD_NUMBER' ($DOCKER_LATEST_TAG) ..."
 
   # Add "-q" for silence...
-  docker build \
+  docker buildx build \
+    --platform=linux/amd64,linux/arm64 \
     --no-cache \
     --pull \
+    --push \
     -f Dockerfile \
     -t $DOCKER_NAME/$BUILD_NAME:$DOCKER_LATEST_TAG \
     -t $DOCKER_NAME/$BUILD_NAME:$BUILD_NUMBER \
@@ -97,24 +99,7 @@ if [[ -n ${DEF_BRANCH} ]]; then
     --build-arg BUILD_NUMBER="$BUILD_NUMBER" \
     .
 
-  DOCKER_BUILD_EXITCODE=$?
-
-  if [ $DOCKER_BUILD_EXITCODE -eq 0 ]; then
-    if [[ DEF_PUSHDOCKERREGISTRY -eq 1 ]]; then
-      echo "Pushing image to Docker Registry ..."
-      docker push $DOCKER_NAME/$BUILD_NAME:$DOCKER_LATEST_TAG
-      docker push $DOCKER_NAME/$BUILD_NAME:$BUILD_NUMBER
-      echo "Done"
-    else
-      echo "Build is ready."
-      echo "You may push it to docker registry using:"
-      echo "  docker push $DOCKER_NAME/$BUILD_NAME:$DOCKER_LATEST_TAG"
-      echo "  docker push $DOCKER_NAME/$BUILD_NAME:$BUILD_NUMBER"
-    fi
-  else
-    echo -e "\nBuild failed."
-    exit $DOCKER_BUILD_EXITCODE
-  fi
+  echo "Done"
 
   if [ -d ${CODE_BASE} ]; then rm -rf ${CODE_BASE}; fi
 
