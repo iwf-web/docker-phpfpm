@@ -115,6 +115,11 @@ RUN apt-get --no-install-recommends install -y \
     docker-php-ext-install opcache && \
     docker-php-ext-enable opcache
 
+# Remove ISO-2022-CN-EXT Charset (CVE-2024-2961)
+RUN sed -i '/ISO-2022-CN-EXT/s/^/#/' /usr/lib/x86_64-linux-gnu/gconv/gconv-modules.d/gconv-modules-extra.conf && \
+    iconvconfig && \
+    iconv -l | grep -E 'CN-?EXT' && exit 1 || true
+
 # Set time zone
 RUN rm /etc/localtime && \
     ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
