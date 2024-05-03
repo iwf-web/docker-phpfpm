@@ -1,5 +1,9 @@
 # Changelog
 
+`8.1-9` (2024-05-03)
+- fix enable-xdebug-cli command for new dev stack 
+- mitigation for CVE-2024-2961
+
 `8.1-8` (2023-12-20)
 - add multi platform build
 
