@@ -110,8 +110,8 @@ RUN apt-get --no-install-recommends install -y \
     docker-php-ext-install zip && \
     \
     # imagick 3.7.0 contains a bug that prevents the pecl install on arm64
-    # leverage https://github.com/mlocati/docker-php-extension-installer to install imagick from the commit that contains the fix \
-    # can be removed as soon as imagick releases a new version and replaced with the old version
+    # leverage https://github.com/mlocati/docker-php-extension-installer to install imagick from the commit that contains the fix
+    # can be removed as soon as imagick releases a new version, switch to regular pecl install afterwards
     ( curl -sSLf https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions -o - || echo 'return 1' ) | sh -s \
           imagick/imagick@9df92616f577e38625b96b7b903582a46c064739 && \
 #    pecl install imagick && \
