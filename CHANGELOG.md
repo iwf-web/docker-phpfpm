@@ -1,5 +1,8 @@
 # Changelog
 
+`8.3-3` (2024-07-09)
+- fix ARM build (imagick bug)
+
 `8.3-2` (2024-05-03)
 - fix enable-xdebug-cli command for new dev stack
 - mitigation for CVE-2024-2961
