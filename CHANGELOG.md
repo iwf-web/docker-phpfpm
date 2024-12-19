@@ -1,5 +1,8 @@
 # Changelog
 
+`8.3-4` (2024-12-19)
+- let supervisor log to stdout/stderr to improve logging
+
 `8.3-3` (2024-07-09)
 - fix ARM build (imagick bug)
 
