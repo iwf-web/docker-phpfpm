@@ -26,17 +26,6 @@ LABEL io.web-solutions.git-branch=$GIT_BRANCH \
     io.web-solutions.build-creator=$BUILD_CREATOR \
     io.web-solutions.build-number=$BUILD_NUMBER
 
-# copy assets
-COPY ./assets/ /
-RUN chmod +x /usr/local/bin/wait-for.sh && \
-    chmod +x /usr/local/bin/iwfstartup.sh && \
-    chmod +x /usr/local/bin/iwfsfconsole.sh && \
-    chmod +x /usr/local/bin/iwfcronenv.sh && \
-    chmod +x /usr/local/bin/enable-xdebug-mod && \
-    chmod +x /usr/local/bin/disable-xdebug-mod && \
-    chmod +x /usr/local/bin/update-env-file.sh && \
-    chmod +x /usr/local/bin/clear-sessions.sh
-
 # install OS updates (security fixes)
 RUN apt-get update && apt-get -y upgrade
 
@@ -163,6 +152,17 @@ RUN     chown -R www-data:www-data /var/www
 # add cronjob for root to clean PHP session files every night (if env var CLEAR_SESSIONS_IN is set with the session files directory)
 # user's www-data cronjobs are usually overwritten by projects
 RUN (crontab -l ; echo "0 0 * * * /bin/bash /usr/local/bin/clear-sessions.sh") | crontab -
+
+# copy assets, replacing some default config files
+COPY ./assets/ /
+RUN chmod +x /usr/local/bin/wait-for.sh && \
+    chmod +x /usr/local/bin/iwfstartup.sh && \
+    chmod +x /usr/local/bin/iwfsfconsole.sh && \
+    chmod +x /usr/local/bin/iwfcronenv.sh && \
+    chmod +x /usr/local/bin/enable-xdebug-mod && \
+    chmod +x /usr/local/bin/disable-xdebug-mod && \
+    chmod +x /usr/local/bin/update-env-file.sh && \
+    chmod +x /usr/local/bin/clear-sessions.sh
 
 # www-data is default user
 USER www-data
