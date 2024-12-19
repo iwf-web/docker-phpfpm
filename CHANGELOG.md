@@ -1,5 +1,8 @@
 # Changelog
 
+`8.3-5` (2024-12-19)
+- further improve log handling
+
 `8.3-4` (2024-12-19)
 - let supervisor log to stdout/stderr to improve logging
 
