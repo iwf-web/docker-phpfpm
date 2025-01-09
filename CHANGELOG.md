@@ -1,5 +1,8 @@
 # Changelog
 
+`8.4-1` (2025-01-09)
+- add stdout logging
+
 `8.4-0` (2024-11-25)
 - new PHP 8.4 branch
 
