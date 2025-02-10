@@ -1,9 +1,9 @@
 # Changelog
 
-`8.4-2` (2025-02-10)
+`8.4-3` (2025-02-10)
 - point CMD to default supervisor config
 
-`8.4-1` (2025-01-09)
+`8.4-2` (2025-01-09)
 - add stdout logging
 
 `8.4-0` (2024-11-25)
