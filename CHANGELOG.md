@@ -1,5 +1,8 @@
 # Changelog
 
+`8.2-8` (2025-02-10)
+- point CMD to default supervisor config
+
 `8.2-7` (2024-05-03)
 - fix enable-xdebug-cli command for new dev stack
 - mitigation for CVE-2024-2961
