@@ -1,5 +1,8 @@
 # Changelog
 
+`8.3-6` (2025-02-10)
+- point CMD to default supervisor config
+
 `8.3-5` (2024-12-19)
 - further improve log handling
 
