@@ -1,5 +1,8 @@
 # Changelog
 
+`8.4-4` (2025-06-17)
+- add `screen` command
+
 `8.4-3` (2025-02-10)
 - point CMD to default supervisor config
 

@@ -65,7 +65,8 @@ RUN  apt-get install --no-install-recommends -y \
      netcat-openbsd \
      gnupg \
      cron \
-     procps
+     procps \
+     screen
 
 # manually setup man directories because the new PHP base image seems to use a slim debian package not including manpages
 # some package install scripts pretend they should be there
