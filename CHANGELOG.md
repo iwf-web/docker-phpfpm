@@ -1,5 +1,8 @@
 # Changelog
 
+`7.4.11` (2025-07-29)
+- update to Debian Bullseye as Buster was removed from the Debian repository
+
 `7.4.10` (2023-12-22)
 - enable multi platform build
 
