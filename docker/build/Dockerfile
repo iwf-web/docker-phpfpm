@@ -96,15 +96,13 @@ RUN apt-get --no-install-recommends install -y \
     docker-php-ext-install intl && \
     docker-php-ext-install iconv && \
     docker-php-ext-install exif && \
-    docker-php-ext-install zip && \
-    \
+    docker-php-ext-install zip
 #    docker-php-ext-enable imagick && \
-    \
 #    docker-php-ext-install opcache && \ # https://tideways.com/profiler/blog/whats-new-in-php-8-5-in-terms-of-performance-debugging-and-operations
 #    docker-php-ext-enable opcache
 
-#RUN ( curl -sSLf https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions -o - || echo 'return 1' ) | sh -s \
-#      Imagick/imagick@master
+RUN ( curl -sSLf https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions -o - || echo 'return 1' ) | sh -s \
+      Imagick/imagick@14880bd
 
 # Remove ISO-2022-CN-EXT Charset (CVE-2024-2961)
 RUN sed -i '/ISO-2022-CN-EXT/s/^/#/' /usr/lib/x86_64-linux-gnu/gconv/gconv-modules.d/gconv-modules-extra.conf && \
