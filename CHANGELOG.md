@@ -1,5 +1,8 @@
 # Changelog
 
+`8.5-0` (2025-06-17)
+- new PHP 8.5 branch
+
 `8.4-4` (2025-06-17)
 - add `screen` command
 
