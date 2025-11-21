@@ -1,4 +1,6 @@
 # Changelog
+`8.5-1` (2025-06-17)
+- fix imagick compilation
 
 `8.5-0` (2025-06-17)
 - new PHP 8.5 branch
