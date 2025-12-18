@@ -123,7 +123,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         libwebp7 \
         libpng16-16 \
         libxml2 \
-        libmagickwand-7.q16hdri-10 \
+        libmagickwand-7.q16-10 \
         libgomp1 \
     \
     # Create locale files \
@@ -150,7 +150,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     \
     # Add www-data to sudoers only for specific commands (minimal privileges) \
     && { \
-        echo "www-data ALL=(ALL) NOPASSWD: /usr/bin/supervisord"; \
+        echo "www-data ALL=(ALL) NOPASSWD: SETENV: /usr/bin/supervisord"; \
         echo "www-data ALL=(ALL) NOPASSWD: /usr/local/bin/update-env-file.sh"; \
     } >> /etc/sudoers \
     \
