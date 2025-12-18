@@ -167,6 +167,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     \
     # Prepare compose cache folder
     && mkdir --parents /var/cache/composer/cache \
+    && chown --recursive www-data:www-data /var/cache/composer \
     \
     # Clean up \
     && apt-get clean \
