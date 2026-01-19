@@ -1,5 +1,8 @@
 # Changelog
 
+`8.3-7` (2026-01-19)
+- fix "listen" statement due to base image update
+
 `8.3-6` (2025-02-10)
 - point CMD to default supervisor config
 
