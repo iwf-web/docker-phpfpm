@@ -1,4 +1,8 @@
 # Changelog
+
+`8.5-2` (2026-01-19)
+- fix php-fpm `listen` directive due to base image changes
+
 `8.5-1` (2025-06-17)
 - fix imagick compilation
 
