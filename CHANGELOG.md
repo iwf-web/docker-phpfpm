@@ -1,5 +1,8 @@
 # Changelog
 
+`8.4-5` (2026-01-19)
+- fix php-fpm `listen` directive due to base image changes
+
 `8.4-4` (2025-06-17)
 - add `screen` command
 
