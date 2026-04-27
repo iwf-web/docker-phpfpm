@@ -78,6 +78,7 @@ RUN apt-get --no-install-recommends install -y \
     zlib1g-dev \
     libicu-dev \
     g++ \
+    libfcgi-bin \
     libcurl4-gnutls-dev \
     libsqlite3-dev \
     libfreetype6-dev \

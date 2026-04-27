@@ -1,5 +1,8 @@
 # Changelog
 
+`8.5-3` (2026-04-27)
+- add /status endpoint for debugging purposes, queryable locally with `cgi-fcgi`
+
 `8.5-2` (2026-01-19)
 - fix php-fpm `listen` directive due to base image changes
 
