@@ -1,6 +1,6 @@
 # Changelog
 
-`8.0-3` (2026-05-05)
+`8.0-4` (2026-05-05)
 - re-add 8.0 image for compatibility with older applications
  
 `8.1-10` (2025-02-10)
