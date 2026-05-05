@@ -1,4 +1,4 @@
-FROM php:8.1-fpm-bookworm
+FROM php:8.0-fpm-bullseye
 
 MAINTAINER Jens Hassler <j.hassler@iwf.ch>
 
