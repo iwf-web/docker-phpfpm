@@ -1,5 +1,8 @@
 # Changelog
 
+`8.4-7` (2026-05-26)
+- fix env variable escaping to support variables with '#' character / clarify env var handling in docs
+
 `8.4-6` (2026-04-29)
 - add /status endpoint for debugging purposes, queryable locally with `cgi-fcgi`
 

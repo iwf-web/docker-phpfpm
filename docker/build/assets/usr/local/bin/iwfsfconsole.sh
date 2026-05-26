@@ -1,6 +1,5 @@
 #!/bin/bash
 # use this script to execute Symfony commands in crontab
-# add required variables to dockerinit.d script 03_export_variables.sh
 
 set -a # all environment variables are automatically exported this way
 
@@ -14,8 +13,10 @@ fi
 
 PHP='/usr/local/bin/php'
 SYMFCONS='/app/bin/console'
-ENVFILE='/usr/local/bin/iwfsfconsole.env'
 
+# this is legacy: cron is running through pam, and pam reads env files from /etc/environment
+# /etc/environment is populated on container start through iwfstartup.sh -> update-env-file.sh
+ENVFILE='/usr/local/bin/iwfsfconsole.env'
 if [ -f "$ENVFILE" ]; then
     echo -e "\n==> Sourcing $ENVFILE ..."
     source "$ENVFILE"

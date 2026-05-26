@@ -1,6 +1,5 @@
 #!/bin/bash
 # use this script to execute shell commands in crontab
-# add required variables to dockerinit.d script 03_export_variables.sh
 
 set -a # all environment variables are automatically exported this way
 
@@ -12,8 +11,9 @@ if [ "$(whoami)" != 'www-data' ]; then
   exit 1
 fi
 
+# this is legacy: cron is running through pam, and pam reads env files from /etc/environment
+# /etc/environment is populated on container start through iwfstartup.sh -> update-env-file.sh
 ENVFILE='/usr/local/bin/iwfsfconsole.env'
-
 if [ -f "$ENVFILE" ]; then
     echo -e "\n==> Sourcing $ENVFILE ..."
     source "$ENVFILE"
