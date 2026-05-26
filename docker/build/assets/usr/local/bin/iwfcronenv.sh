@@ -11,9 +11,8 @@ if [ "$(whoami)" != 'www-data' ]; then
   exit 1
 fi
 
-# this is legacy: cron is running through pam, and pam reads env files from /etc/environment
-# /etc/environment is populated on container start through iwfstartup.sh -> update-env-file.sh
-ENVFILE='/usr/local/bin/iwfsfconsole.env'
+# this file is written by update-env-file.sh called by iwfstartup.sh
+ENVFILE='/usr/local/bin/iwf.env'
 if [ -f "$ENVFILE" ]; then
     echo -e "\n==> Sourcing $ENVFILE ..."
     source "$ENVFILE"
