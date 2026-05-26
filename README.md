@@ -11,13 +11,6 @@ This image contains a lot of tools, configs, PHP modules and scripts for easy de
 
 It can be used together with our [Nginx base image](https://hub.docker.com/repository/docker/iwfwebsolutions/nginx). 
 
-See our [Symfony Vagrant Docker Example Project](https://github.com/iwf-web/symfony-vagrant-docker-example) for a usage example.
-
-The following releases are available:
-
-- [releases/PHP-PFM-7.4](https://github.com/iwf-web/docker-phpfpm/tree/releases/PHP-FPM-7.4)
-- [releases/PHP-PFM-8.1](https://github.com/iwf-web/docker-phpfpm/tree/releases/PHP-FPM-8.1)
-
 See the branches for release specific information.
 
 
@@ -140,13 +133,11 @@ Executes all scripts in `/data/dockerinit.d`, ordered by file name.
 Executes all scripts in `/data/dockerinit.d/initial` **ONCE**, ordered by file name. This should contain all scripts that should only be executed during initial deployment, e.g. "fix-permissions.sh". After all scripts have been run, the flag file "initial-run-done" is written to the folder `FLAGS_PATH` (environment variable, default: /data/flags), which prevents future execution.
 
 
-### iwfcronenv.sh
+### iwfcronenv.sh 
 
-Used for Cronjobs. Executes commands with correct environment. Use absolute paths.
+Used for Cronjobs. Executes commands with some logging. Use absolute paths.
 
-The environment variables are dumped to the file `/etc/environment` by the script `iwfstartup.sh` (calling `update-env-file.sh`). The variables in `/etc/environment` can be accessed by cron jobs.
-
-See the usage example in our [Example Project](https://github.com/iwf-web/symfony-vagrant-docker-example)
+The environment variables are dumped to the file `/etc/environment` by the script `iwfstartup.sh` (calling `update-env-file.sh`). The variables in `/etc/environment` can be accessed by cron jobs because cron uses PAM and PAM is configured to read /etc/environment in /etc/pam.d/cron.
 
 
 ## Multi platform builds
