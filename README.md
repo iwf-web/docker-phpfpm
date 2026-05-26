@@ -135,9 +135,13 @@ Executes all scripts in `/data/dockerinit.d/initial` **ONCE**, ordered by file n
 
 ### iwfcronenv.sh 
 
-Used for Cronjobs. Executes commands with some logging. Use absolute paths.
+Used for Cronjobs. Executes commands with correct environment variables and some logging. Use absolute paths.
 
-The environment variables are dumped to the file `/etc/environment` by the script `iwfstartup.sh` (calling `update-env-file.sh`). The variables in `/etc/environment` can be accessed by cron jobs because cron uses PAM and PAM is configured to read /etc/environment in /etc/pam.d/cron.
+The environment variables are dumped to the file `/etc/environment` and `/usr/local/bin/iwf.env` by the script `update-env-file.sh` (called by `iwfstartup.sh`). 
+
+Difference:
+- The variables in `/etc/environment` can be accessed by cron jobs because cron uses PAM and PAM is configured to read /etc/environment in /etc/pam.d/cron. This has some limits and is not too robust. Actually, it cuts env var values having a # character inside.
+- The variables in `/usr/local/bin/iwf.env` are "source"d by the wrapper scripts `iwfcronenv.sh` and `iwfsfconsole.sh` and can be used to start cron jobs. This supports also special characters like #.- 
 
 
 ## Multi platform builds
