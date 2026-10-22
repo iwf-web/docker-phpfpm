@@ -1,5 +1,8 @@
 # Changelog
 
+`7.4.12` (2026-10-22)
+- patch PHP 7.4.33 against CVE-2026-109618 and CVE-2026-109619 (PHP security team backport)
+
 `7.4.11` (2025-07-29)
 - update to Debian Bullseye as Buster was removed from the Debian repository
 
