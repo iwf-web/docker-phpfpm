@@ -1,5 +1,8 @@
 # Changelog
 
+`8.0-5` (2026-10-22)
+- patch PHP 8.0.30 against CVE-2026-109618 and CVE-2026-109619 (PHP security team backport)
+
 `8.0-4` (2026-05-05)
 - re-add 8.0 image for compatibility with older applications
  
