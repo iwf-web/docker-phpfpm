@@ -1,5 +1,8 @@
 # Changelog
 
+`8.1-11` (2026-10-22)
+- patch PHP 8.1.34 against CVE-2026-109618 and CVE-2026-109619 (PHP security team backport)
+
 `8.1-10` (2025-02-10)
 - point CMD to default supervisor config
 

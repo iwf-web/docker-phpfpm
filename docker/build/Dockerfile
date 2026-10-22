@@ -37,6 +37,92 @@ RUN chmod +x /usr/local/bin/wait-for.sh && \
     chmod +x /usr/local/bin/update-env-file.sh && \
     chmod +x /usr/local/bin/clear-sessions.sh
 
+# PHP 8.1 is EOL: rebuild with the PHP security team backport, using the official image's compile step
+COPY ./php-8.1-cve-2026-109618-109619.patch /tmp/
+RUN set -eux; \
+    savedAptMark="$(apt-mark showmanual)"; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        libargon2-dev \
+        libcurl4-openssl-dev \
+        libonig-dev \
+        libreadline-dev \
+        libsodium-dev \
+        libsqlite3-dev \
+        libssl-dev \
+        libxml2-dev \
+        zlib1g-dev \
+    ; \
+    export \
+        CFLAGS="$PHP_CFLAGS" \
+        CPPFLAGS="$PHP_CPPFLAGS" \
+        LDFLAGS="$PHP_LDFLAGS" \
+        PHP_BUILD_PROVIDER='https://github.com/docker-library/php' \
+        PHP_UNAME='Linux - Docker' \
+    ; \
+    docker-php-source extract; \
+    cd /usr/src/php; \
+    patch -p1 < /tmp/php-8.1-cve-2026-109618-109619.patch; \
+    # docker-php-ext-install builds extensions (e.g. opcache) from this tarball
+    tar -cJf /usr/src/php.tar.xz --exclude=.docker-extracted -C /usr/src php; \
+    rm -f /usr/src/php.tar.xz.asc; \
+    gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"; \
+    debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
+    if [ ! -d /usr/include/curl ]; then \
+        ln -sfT "/usr/include/$debMultiarch/curl" /usr/local/include/curl; \
+    fi; \
+    ./configure \
+        --build="$gnuArch" \
+        --with-config-file-path="$PHP_INI_DIR" \
+        --with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
+        --enable-option-checking=fatal \
+        --with-mhash \
+        --with-pic \
+        --enable-ftp \
+        --enable-mbstring \
+        --enable-mysqlnd \
+        --with-password-argon2 \
+        --with-sodium=shared \
+        --with-pdo-sqlite=/usr \
+        --with-sqlite3=/usr \
+        --with-curl \
+        --with-iconv \
+        --with-openssl \
+        --with-readline \
+        --with-zlib \
+        --disable-phpdbg \
+        --with-pear \
+        $(test "$gnuArch" = 'riscv64-linux-gnu' && echo '--without-pcre-jit') \
+        --with-libdir="lib/$debMultiarch" \
+        --disable-cgi \
+        --enable-fpm \
+        --with-fpm-user=www-data \
+        --with-fpm-group=www-data \
+    ; \
+    make -j "$(nproc)"; \
+    find -type f -name '*.a' -delete; \
+    make install; \
+    find /usr/local -type f -perm '/0111' -exec sh -euxc 'strip --strip-all "$@" || :' -- '{}' +; \
+    make clean; \
+    cd /; \
+    docker-php-source delete; \
+    rm /tmp/php-8.1-cve-2026-109618-109619.patch; \
+    apt-mark auto '.*' > /dev/null; \
+    [ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
+    find /usr/local -type f -executable -exec ldd '{}' ';' \
+        | awk '/=>/ { so = $(NF-1); if (index(so, "/usr/local/") == 1) { next }; gsub("^/(usr/)?", "", so); printf "*%s\n", so }' \
+        | sort -u \
+        | xargs -rt dpkg-query --search \
+        | awk 'sub(":$", "", $1) { print $1 }' \
+        | sort -u \
+        | xargs -r apt-mark manual \
+    ; \
+    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+    rm -rf /var/lib/apt/lists/*; \
+    pecl update-channels; \
+    rm -rf /tmp/pear ~/.pearrc; \
+    php --version
+
 # install OS updates (security fixes)
 RUN apt-get update && apt-get -y upgrade
 
@@ -109,7 +195,8 @@ RUN apt-get --no-install-recommends install -y \
     docker-php-ext-install exif && \
     docker-php-ext-install zip && \
     \
-    pecl install imagick && \
+    # pecl.php.net returns 404 for allreleases2.xml, so the name lookup fails
+    pecl install https://pecl.php.net/get/imagick-3.8.1.tgz && \
     docker-php-ext-enable imagick && \
     \
     docker-php-ext-install opcache && \
