@@ -1,5 +1,8 @@
 # Changelog
 
+`8.6-0` (2026-11-19)
+- new PHP 8.6 branch
+
 `8.5-4` (2026-05-26)
 - fix env variable handling to support variables with '#' character / clarify env var handling in docs
 
