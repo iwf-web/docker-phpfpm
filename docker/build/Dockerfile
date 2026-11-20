@@ -63,6 +63,8 @@ RUN set -eux; \
     docker-php-source extract; \
     cd /usr/src/php; \
     for p in /tmp/patches/*.patch; do patch -p1 < "$p"; done; \
+    # the phpize build of pdo has no re2c to regenerate the patched lexer
+    re2c --no-generation-date -o ext/pdo/pdo_sql_parser.c ext/pdo/pdo_sql_parser.re; \
     # docker-php-ext-install builds extensions (e.g. opcache) from this tarball
     tar -cJf /usr/src/php.tar.xz --exclude=.docker-extracted -C /usr/src php; \
     rm -f /usr/src/php.tar.xz.asc; \
