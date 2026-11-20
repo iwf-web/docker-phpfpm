@@ -37,8 +37,8 @@ RUN chmod +x /usr/local/bin/wait-for.sh && \
     chmod +x /usr/local/bin/update-env-file.sh && \
     chmod +x /usr/local/bin/clear-sessions.sh
 
-# PHP 8.1 is EOL: rebuild with the PHP security team backport, using the official image's compile step
-COPY ./php-8.1-cve-2026-109618-109619.patch /tmp/
+# PHP 8.1 is EOL: rebuild with the security backports from Ondřej Surý's php8.1 package, using the official image's compile step
+COPY ./patches/ /tmp/patches/
 RUN set -eux; \
     savedAptMark="$(apt-mark showmanual)"; \
     apt-get update; \
@@ -62,7 +62,7 @@ RUN set -eux; \
     ; \
     docker-php-source extract; \
     cd /usr/src/php; \
-    patch -p1 < /tmp/php-8.1-cve-2026-109618-109619.patch; \
+    for p in /tmp/patches/*.patch; do patch -p1 < "$p"; done; \
     # docker-php-ext-install builds extensions (e.g. opcache) from this tarball
     tar -cJf /usr/src/php.tar.xz --exclude=.docker-extracted -C /usr/src php; \
     rm -f /usr/src/php.tar.xz.asc; \
@@ -106,7 +106,7 @@ RUN set -eux; \
     make clean; \
     cd /; \
     docker-php-source delete; \
-    rm /tmp/php-8.1-cve-2026-109618-109619.patch; \
+    rm -rf /tmp/patches; \
     apt-mark auto '.*' > /dev/null; \
     [ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
     find /usr/local -type f -executable -exec ldd '{}' ';' \

@@ -1,5 +1,9 @@
 # Changelog
 
+`8.1-12` (2026-11-20)
+- patch PHP 8.1.34 with the security backports from Ondřej Surý's php8.1 package up to 8.1.34-14 (fixes from PHP 8.2.31 to 8.2.36 and 8.3.19)
+- `session.upload_progress.enabled` is now off by default (CVE-2026-115560)
+
 `8.1-11` (2026-10-22)
 - patch PHP 8.1.34 against CVE-2026-109618 and CVE-2026-109619 (PHP security team backport)
 
