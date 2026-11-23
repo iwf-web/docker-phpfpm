@@ -1,4 +1,4 @@
-FROM php:8.6-fpm-bookworm
+FROM php:8.6-fpm-trixie
 
 MAINTAINER Jens Hassler <j.hassler@iwf.ch>
 
